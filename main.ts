@@ -537,7 +537,7 @@ interface VSection {
   chunks: VChunk[];
 }
 
-const V_SECTION_RE = /^\*\*\* (Add File|Delete File|Update File):(.*)$/;
+const V_SECTION_RE = /^\*\*\* (Add File|Delete File|Update File): (.*)$/;
 
 function parseV4a(lines: string[]): VSection[] {
   const first = lines.findIndex((l) => !blank(l));
@@ -589,8 +589,8 @@ function parseV4a(lines: string[]): VSection[] {
     } else {
       let moveTo: string | null = null;
       let k = 0;
-      if (raw.length > 0 && raw[0]!.startsWith('*** Move to:')) {
-        moveTo = raw[0]!.slice('*** Move to:'.length).trim();
+      if (raw.length > 0 && raw[0]!.startsWith('*** Move to: ')) {
+        moveTo = raw[0]!.slice('*** Move to: '.length).trim();
         k = 1;
       }
       const chunks: VChunk[] = [];
@@ -617,7 +617,7 @@ function parseV4a(lines: string[]): VSection[] {
           k += 1;
           continue;
         }
-        if (l.startsWith('*** Move to:')) throw new Exit2(`error: parse ${lineNo(k)}`);
+        if (l.startsWith('*** Move to: ')) throw new Exit2(`error: parse ${lineNo(k)}`);
         if (l === '' || l.startsWith(' ') || l.startsWith('-') || l.startsWith('+')) {
           if (cur === null) cur = { anchor: null, O: [], N: [], eof: false };
           if (l === '') {
